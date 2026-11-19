@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI咨询对话 · 学术实验</title>
+<title>问途 AI · 个性化职业问题分析</title>
 <style>
 /* ─── TOKENS ─── */
 :root {
@@ -81,6 +81,32 @@ body {
   text-transform: uppercase;
   color: var(--dim);
   margin-bottom: 12px;
+}
+
+/* 首页适用场景与流程说明 */
+.use-cases {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.9;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 24px;
+}
+.process-list { margin: 4px 0 18px 20px; padding-left: 10px; color: #4f4f4f; font-size: 13px; line-height: 2; }
+.advice-reminder { background:#fff; border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; font-size:13px; line-height:1.75; margin-bottom:22px; }
+.advice-reminder strong { display:block; margin-bottom:6px; }
+.sv-group-intro { font-size:12px; color:var(--dim); line-height:1.7; margin-bottom:15px; }
+@media (max-width: 480px) {
+  #setup { padding: 30px 20px 52px; }
+  .sv-edge { min-width:36px; font-size:9px; }
+  .sv-pts { gap:2px; }
+  .sv-pt { width:25px; height:28px; flex:1; }
+  .sv-scale { gap:4px; }
+  .followup-wrap { max-width:92%; }
+  .msg .bubble { max-width:88%; }
 }
 
 /* topic grid */
@@ -329,6 +355,16 @@ body {
 
 .fup-btn:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); }
 
+/* 个性化组补充信息输入框，仅在 multi_personal 条件显示 */
+.personal-input {
+  width: 100%; border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 11px 14px; font-family: inherit; font-size: 13px;
+  line-height: 1.6; background: #fff; resize: vertical;
+  min-height: 76px; outline: none;
+}
+.personal-input:focus { border-color: var(--ink); }
+.personal-label { font-size: 13px; line-height: 1.6; margin-top: 6px; }
+
 .fup-end {
   border-color: var(--border);
   color: var(--dim);
@@ -449,36 +485,14 @@ body {
 
 <!-- ════════════ SETUP ════════════ -->
 <div id="setup">
-  <div class="s-eyebrow">学术研究 · 问卷实验</div>
-  <div class="s-title">AI 咨询对话体验</div>
-  <div class="s-subtitle">本实验将模拟一次真实的AI对话咨询体验，请按照提示操作。<br>所有数据仅用于学术研究，匿名处理，不会留存个人信息。</div>
-
-  <div class="s-label">请选择您最想咨询的方向</div>
-  <div class="topic-grid">
-    <div class="topic-card" onclick="pickTopic(this,'career','今年的求职 / 职业方向')">
-      <div class="tc-icon">💼</div>
-      <div class="tc-label">职业发展</div>
-      <div class="tc-desc">求职、换工作、职业规划</div>
-    </div>
-    <div class="topic-card" onclick="pickTopic(this,'decision','是否做出某个重要决定')">
-      <div class="tc-icon">🔀</div>
-      <div class="tc-label">重要抉择</div>
-      <div class="tc-desc">考研、创业、辞职等大决定</div>
-    </div>
-    <div class="topic-card" onclick="pickTopic(this,'relationship','当前感情或人际关系状态')">
-      <div class="tc-icon">💬</div>
-      <div class="tc-label">人际关系</div>
-      <div class="tc-desc">感情运势、合作缘分</div>
-    </div>
-    <div class="topic-card" onclick="pickTopic(this,'overall','近期整体运势与注意事项')">
-      <div class="tc-icon">✨</div>
-      <div class="tc-label">整体运势</div>
-      <div class="tc-desc">近期状态、需要关注什么</div>
-    </div>
-  </div>
-
-  <div class="concern-wrap" id="concern-wrap">
-    <div class="s-divider"></div>
+  <div class="s-eyebrow">WENTU AI · 职业决策咨询</div>
+  <div class="s-title">问途 AI</div>
+  <div class="s-subtitle"><strong>基于生成式人工智能的个性化职业问题分析</strong><br>
+  本系统接入新一代 AI 大语言模型。AI 顾问可结合用户提供的问题信息，对职业选择与发展方向进行分析，并生成解释和行动建议；系统能够梳理职业决策的影响因素，提供结构化的决策参考。</div>
+  <div class="use-cases">✦ 应届毕业生求职 / 大学生职业方向 / 转岗与跳槽 / 更换行业 / 城市与岗位选择 / 长期职业规划</div>
+  <div class="s-label" style="margin-top:24px;">本次咨询流程</div>
+  <ol class="process-list"><li>填写想要咨询的相关信息。</li><li>阅读 AI 生成的分析与建议。</li><li>根据页面提示完成咨询体验。</li><li>填写体验评价问卷。</li></ol>
+<div class="concern-wrap" id="concern-wrap">
     <div class="s-label">当前情况</div>
     <textarea id="context-input"
       placeholder="例：我目前正在找工作，已经投递了几家公司，但还没有拿到满意的offer，最近比较纠结下一步该怎么选择。"></textarea>
@@ -493,7 +507,7 @@ body {
 
     <div class="s-label" style="margin-top:18px;">用一两句话描述您目前最想了解的具体问题</div>
     <textarea id="concern-input"
-      placeholder=""></textarea>
+      placeholder="例：我今年想换工作，但不确定现在是不是好时机，想知道风险和机会大概在哪里。"></textarea>
     <div class="birth-row" id="birth-row">
       <div>
         <div class="s-label" style="margin-bottom:6px;font-size:10px;">出生年份</div>
@@ -517,7 +531,7 @@ body {
   </div>
 
   <button class="start-btn" onclick="startExperiment()">开始咨询对话 →</button>
-  <div class="s-notice">※ 本页面为学术实验材料。AI 对话由系统自动生成，不构成真实建议。<br>您的使用记录仅用于分析，实验结束后将完整告知实验设计。</div>
+  <div class="s-notice">※ AI生成内容供咨询参考，不应作为重要职业决策的唯一依据。<br>参与记录将用于研究分析，体验结束后将说明实验目的。</div>
 </div>
 
 <!-- ════════════ CHAT ════════════ -->
@@ -525,7 +539,7 @@ body {
   <div class="chat-header">
     <div class="ch-avatar" id="ch-av">🔮</div>
     <div>
-      <div class="ch-name" id="ch-name">AI 顾问</div>
+      <div class="ch-name" id="ch-name">问途 AI</div>
       <div class="ch-desc" id="ch-desc">正在连接…</div>
     </div>
   </div>
@@ -533,166 +547,55 @@ body {
   <div class="chat-body" id="messages"></div>
 
   <div id="survey-panel">
-    <div class="sv-title">请回答以下问题（1 = 完全不同意，7 = 完全同意）</div>
-
-<!-- AA：AI建议采纳意愿 -->
-<div class="sv-item">
-  <div class="sv-q">1. 我愿意参考AI提供的建议进行决策。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="aa1"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">2. 我愿意采纳AI提出的建议。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="aa2"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">3. 未来遇到类似问题时，我愿意依据AI建议采取行动。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="aa3"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">4. 我愿意将AI建议作为决策的重要参考。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="aa4"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-
-<!-- PA：感知准确性 -->
-<div class="sv-item">
-  <div class="sv-q">5. AI对我当前情况的理解是准确的。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pa1"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">6. AI提供的分析与我的实际情况相符。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pa2"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">7. AI给出的判断符合我的真实处境。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pa3"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">8. 总体而言，我认为AI的分析是准确的。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pa4"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-
-<!-- PU：感知有用性 -->
-<div class="sv-item">
-  <div class="sv-q">9. 该AI建议对我解决当前问题是有帮助的。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pu1"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">10. 该AI建议提升了我做出决策的能力。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pu2"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">11. 该AI建议对我来说是有价值的。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pu3"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">12. 总体而言，AI提供的建议是有用的。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="pu4"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-
-<!-- CE：认知精加工 -->
-<div class="sv-item">
-  <div class="sv-q">13. 我在思考AI所提供的建议时投入了较多的认知精力。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="ce1"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">14. 我尽力思考AI所提供的建议内容。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="ce2"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-<div class="sv-item">
-  <div class="sv-q">15. 我会进一步思考AI所提供建议的合理性。</div>
-  <div class="sv-scale">
-    <span class="sv-edge">完全不同意</span>
-    <div class="sv-pts" id="ce3"></div>
-    <span class="sv-edge right">完全同意</span>
-  </div>
-</div>
-
-    <!-- Manipulation checks -->
-    <div class="sv-item">
-      <div class="sv-q">16. 【操控检验】我认为刚才和我互动的AI更像是</div>
+    <div class="sv-title">体验评价问卷</div>
+    <div class="sv-group-intro">请结合刚才的咨询体验回答以下陈述（1 = 完全不同意，7 = 完全同意）。其中涉及“这项建议”的题目，均以最后给出的核心行动建议为准。</div>
+    <div id="advice-reminder" class="advice-reminder" style="display:none;"><strong>本次咨询的核心行动建议</strong><span id="advice-text"></span></div>
+    <!-- 感知有用性 / 存储字段：pu -->
+    <div class="sv-item"><div class="sv-q">1. 这次AI建议有助于我梳理当前选择中需要考虑的因素。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pu1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">2. 该AI建议提升了我做出决策的能力。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pu2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">3. 该AI提供的建议帮助我明确了下一步可以采取的行动。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pu3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">4. 总体而言，这次AI建议对我的职业决策具有实际参考价值。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pu4"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 感知个性化候选量表（按提供的题项保留） / 存储字段：pr -->
+    <div class="sv-item"><div class="sv-q">5. 这个AI的回应认真关注了我在职业选择中的顾虑。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pr1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">6. 这个AI的回应体现出对我想法和感受的理解。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pr2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">7. 这个AI的回应认真对待了我所提出的问题。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pr3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 感知回应性候选量表（按提供的题项保留） / 存储字段：pp -->
+    <div class="sv-item"><div class="sv-q">8. 我觉得这个AI理解了我在职业选择上的个人需求。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pp1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">9. 我觉得这个AI知道我在职业选择中真正重视什么。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pp2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">10. 我觉得这个AI在提出建议时考虑了我的个人偏好和需要。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="pp3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 解释贴合性候选量表 / 存储字段：ef -->
+    <div class="sv-item"><div class="sv-q">11. AI的解释触及了我在职业选择中真实的情绪和顾虑。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="ef1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">12. 这次AI的回应让我感到自己的犹豫或不安得到了理解。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="ef2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">13. AI的分析让我联想到自己在职业选择中的真实经历和困扰。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="ef3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 认知信任 / 存储字段：ct -->
+    <div class="sv-item"><div class="sv-q">14. 我相信这个AI具备分析职业相关问题所需的知识。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="ct1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">15. 我相信这个AI有能力作出可靠判断。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="ct2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">16. 我认为这个AI是一位可以信赖的职业相关建议提供者。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="ct3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 情感信任 / 存储字段：et -->
+    <div class="sv-item"><div class="sv-q">17. 我相信这个AI会认真对待我的个人感受和顾虑。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="et1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">18. 我从直觉上相信AI能解决某个难题。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="et2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">19. 我相信来自AI的建议，即使我不确定它是正确的。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="et3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">20. 在讨论与我有关的重要问题时，我在情感上愿意信赖这个AI。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="et4"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 对核心行动建议的风险感知 / 存储字段：risk -->
+    <div class="sv-group-intro">以下题目仅评价最后一条“核心行动建议”的实施风险，而非职业问题本身的风险。</div>
+    <div class="sv-item"><div class="sv-q">21. 实施这项建议可能使我付出较大的时间、经济或机会成本。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="risk1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">22. 如果我按照AI提出的这项建议采取行动，可能面临一定的现实损失。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="risk2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">23. 总体而言，按照这项AI建议采取行动具有较高的风险。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="risk3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 建议采纳意愿 / 存储字段：aa -->
+    <div class="sv-item"><div class="sv-q">24. 我愿意参考AI提供的建议进行决策。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="aa1"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">25. 我愿意采纳AI提出的建议。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="aa2"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">26. 未来遇到类似问题时，我愿意依据AI建议采取行动。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="aa3"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">27. 我愿意将AI建议作为决策的重要参考。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="aa4"></div><span class="sv-edge right">完全同意</span></div></div>
+    <!-- 操纵检验：与网页实际交互日志结合分析，而不是单独作为操纵成功的证据 -->
+    <div class="sv-item"><div class="sv-q">28. 这个AI更像哪种顾问？</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;" id="mc-role">
         <button class="fup-btn" style="flex:1;min-width:120px;" onclick="pickMC('mc-role',this,'命理分析型AI')">命理分析型AI</button>
         <button class="fup-btn" style="flex:1;min-width:120px;" onclick="pickMC('mc-role',this,'专业建议型AI')">专业建议型AI</button>
         <button class="fup-btn" style="flex:1;min-width:120px;" onclick="pickMC('mc-role',this,'说不清楚')">说不清楚</button>
       </div>
     </div>
-    <div class="sv-item">
-      <div class="sv-q">17. 【操控检验】这个AI的回复整体上让你感觉</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;" id="mc-valence">
-        <button class="fup-btn" style="flex:1;min-width:100px;" onclick="pickMC('mc-valence',this,'偏正面乐观')">偏正面乐观</button>
-        <button class="fup-btn" style="flex:1;min-width:100px;" onclick="pickMC('mc-valence',this,'偏负面谨慎')">偏负面谨慎</button>
-      </div>
-    </div>
+    <div class="sv-item"><div class="sv-q">29. 这次AI为其判断和建议提供了充分、具体的补充解释与信息。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="mc-info"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">30. 这次AI依据我提供的个人情况和偏好细化或调整了建议。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="mc-personal"></div><span class="sv-edge right">完全同意</span></div></div>
 
     <button class="sv-submit" id="sv-submit" onclick="submitSurvey()">提交问卷 →</button>
   </div>
@@ -703,7 +606,7 @@ body {
   <div class="ty-icon">🙏</div>
   <div class="ty-h">感谢您的参与</div>
   <div class="ty-p">您的回答已提交。<br><br>
-    <strong>实验告知：</strong>本次对话由AI根据预设的角色提示词自动生成，
+    <strong>实验告知：</strong>本次对话由大语言模型根据预设的分析方式生成，
     旨在研究不同类型AI建议对用户决策的影响。您的数据将匿名用于学术分析，
     不会与任何个人信息关联。如有疑问，请联系研究者。</div>
 </div>
@@ -718,19 +621,19 @@ const EXP = {
   // 'career'   → AI职业规划师角色
   role: 'fortune',
 
-  // 'positive' → 整体乐观、建议行动
-  // 'negative' → 整体谨慎、建议等待
-  valence: 'positive',
+  // 效价不再作为自变量：统一neutral；旧字段仅为兼容现有数据命名。
+  valence: 'neutral',
 
-  // 'single'   → 单轮对话（AI回复后直接进问卷）
-  // 'multi'    → 多轮对话（AI回复后可追问1次）
+  // 'single'         → 单轮（AI回复1次后进入问卷）
+  // 'multi_info'     → 多轮信息扩展（共3次AI回复）
+  // 'multi_personal' → 多轮个性化（共3次AI回复）
   interaction: 'single',
 };
 
 // ── Role profiles ──
 const ROLES = {
   fortune: {
-    name: '玄机 · AI命理顾问',
+    name: '问途 AI',
     desc: '八字命理 · 紫微斗数',
     icon: '🔮',
     color: '#5b2d8e',
@@ -800,17 +703,7 @@ return `
 你是一位精通八字命理、紫微斗数、盲派命理的资深命理师。
 
 
-${valence === "positive"
-  ? "整体基调积极乐观，但必须符合命理逻辑，不可刻意迎合用户。重点指出有利因素、潜在机会和可采取的行动。"
-  : `整体基调必须明确偏负面、谨慎和风险导向。请重点分析用户当前处境中不利的条件、潜在风险、现实阻碍及可能出现的问题。具体要求：
-- 至少明确指出2项与用户实际情况相关的风险、困难、不利因素或潜在阻碍，并解释其可能产生的影响。
-- 【核心结论】必须首先传达谨慎信号，明确指出当前不宜盲目乐观的原因。
-- 【未来趋势】应重点说明可能遇到的阻碍、进展不顺或需要警惕的情况，不得以积极机会作为主要结论。
-- 【行动建议】应以谨慎决策、进一步观察、充分准备或暂缓行动为主，具体建议需与前述风险相对应。
-- 可以提及有利因素，但只能作为次要或附条件的信息，不得用乐观预期抵消主要风险。
-- 不得在结尾使用“总体来看问题不大”“只要努力就会有好结果”等明显偏正面的总结。
-- 保持现实、克制和可信，不得使用恐吓、灾难化或绝对化表达。`}
-}
+基于用户提供的职业信息做审慎、客观、不过度乐观或悲观的分析。应同时考虑机会、限制、风险与不确定性；不要预先决定“适合”或“不适合”采取行动，不得因为命理分析形式就默认负面结论。命理说明属于该角色的解释框架，不应冒充可验证的事实预测。
 
 要求：
 
@@ -851,16 +744,32 @@ ${birth}
 `;
 
 },
-    greeting: '缘起有因，请问阁下希望咨询哪方面的命理运势？',
-    followups: [
-      '这个时间段具体需要注意什么？',
-      '有没有可以改善运势的方法？',
-      '这个判断大概有多大把握？',
-    ],
-    followupPrompt: (q, history) => `用户追问：「${q}」\n请在命理框架内简短作答（100字以内），承接上文，不重复已说内容。`,
+    greeting: '您好，我将结合您填写的职业问题进行命理分析。',
+   followups: {
+
+1:[
+'这个职业判断主要依据哪些命理信息？请详细说明。',
+'未来三个月有哪些需要重点关注的职业时间节点？',
+'目前最需要规避的两项职业风险是什么？依据是什么？'
+],
+
+2:[
+'如果现在行动与继续等待，分别可能出现什么不同的趋势？',
+'哪些命理条件或时间变化可能改变你刚才的判断？',
+'能否细化短期和中期的行动方案，并分别解释原因？'
+],
+
+3:[
+'有没有我忽略的重要因素？',
+'这个建议有没有例外情况？',
+'请最后给我一句最重要的建议。'
+]
+
+},
+    followupPrompt: (q, history) => `用户追问：「${q}」\n请在命理框架内简短作答（180字以内），承接上文，不重复已说内容。`,
   },
   career: {
-    name: '析途 · AI职业顾问',
+    name: '问途 AI',
     desc: '职业规划 · 能力评估',
     icon: '📊',
     color: '#1a4f8a',
@@ -868,7 +777,7 @@ ${birth}
     systemPrompt: (topic, concern, birth, valence) => `你是一名资深职业规划咨询专家，善于在与用户交谈的过程中挖掘其本人可能忽略的性格特质和潜在弱点。
 
 分析要求：
-- ${valence === 'positive' ? '以积极、赋能的视角分析用户的职业情况，重点指出优势和可把握的机会，给出清晰的行动方向' : '客观评估用户当前职业处境中的风险和挑战，提醒需要注意的障碍，建议审慎决策'}
+- 客观评估用户当前职业处境中的有利条件、风险和限制，避免预设乐观或悲观结论
 - 客观、诚实地反映用户当下所处的职业环境和待解决的问题
 - 每个判断配完整逻辑链，禁止空话套话
 - 结合职业发展规律和市场实际，给出短期和长期的具体行动建议
@@ -878,25 +787,55 @@ ${birth}
 - 具体问题：${concern}
 
 请根据以上信息，给出专业的职业规划分析和建议。格式：核心结论 → 逻辑推导 → 短期/长期行动建议。控制在300字以内，语言精炼。`,
-    greeting: '您好，请描述您目前面临的职业困惑，我会为您做专业分析。',
-    followups: [
-      '能具体说说短期内应该怎么做吗？',
-      '这个方向有哪些潜在风险需要注意？',
-      '如果暂时没有条件改变，有什么过渡方案？',
-    ],
-    followupPrompt: (q, history) => `用户追问：「${q}」\n请从职业规划视角简短作答（100字以内），承接上文，不重复已说内容。`,
+    greeting: '您好，我将结合您填写的情况、目标和顾虑，为您分析职业决策。',
+    followups: {
+  1: [
+    '你做出这一职业判断的具体依据是什么？',
+    '未来三个月有哪些职业风险需要特别注意？',
+    '有哪些可行方案？请逐一说明利弊和适用条件。'
+  ],
+  2: [
+    '如果现在行动与继续等待，分别可能带来什么结果？',
+    '哪些关键条件变化可能改变你刚才的判断？',
+    '请进一步解释行动建议的优先顺序及其理由。'
+  ],
+  3: [
+    '有没有我目前忽略的重要因素？',
+    '这个建议在什么情况下可能不适用？',
+    '请最后告诉我最值得优先考虑的一点。'
+  ]
+},
+    followupPrompt: (q, history) => `用户追问：「${q}」\n请从职业规划视角简短作答（180字以内），承接上文，不重复已说内容。`,
   },
 };
 
+const SURVEY_IDS = ["pu1", "pu2", "pu3", "pu4", "pr1", "pr2", "pr3", "pp1", "pp2", "pp3", "ef1", "ef2", "ef3", "ct1", "ct2", "ct3", "et1", "et2", "et3", "et4", "risk1", "risk2", "risk3", "aa1", "aa2", "aa3", "aa4"];
+
 // ── State ──
 const ST = {
-  topic: '', topicLabel: '',
-  concern: '', context: '', goal: '', worry: '', birth: '',
+  topic: 'career',
+  topicLabel: '今年的求职 / 职业方向',
+
+  context: '',
+  goal: '',
+  worry: '',
+  concern: '',
+  birth: '',
+
   history: [],
+  usedFollowups: [],
+  followupQuestions: [],
   surveyAnswers: {},
   mcAnswers: {},
+
   turnCount: 0,
+  maxTurns: 3,
+  finalAdvice: '',
 };
+
+// 页面只提供职业咨询；保留 pickTopic 等旧函数不调用，避免影响其他逻辑。
+document.getElementById('concern-wrap').style.display = 'block';
+document.getElementById('birth-row').style.display = EXP.role === 'fortune' ? 'grid' : 'none';
 
 // ══════════════════════════════════════════
 // SETUP
@@ -911,22 +850,21 @@ function pickTopic(el, key, label) {
   const br = document.getElementById('birth-row');
   cw.style.display = 'block';
   br.style.display = EXP.role === 'fortune' ? 'grid' : 'none';
-
   const contextInput = document.getElementById('context-input');
   const goalInput = document.getElementById('goal-input');
   const worryInput = document.getElementById('worry-input');
 
   const contextExamples = {
-    career: '例：我目前正在找工作，已经投递了几家公司，但还没有拿到满意的offer，最近比较纠结下一步该怎么选择。',
-    decision: '例：我最近正在考虑是否辞职，目前的工作比较稳定，但发展空间有限，同时我已经有了一个新的机会。',
+    career: '例：我目前是应届毕业生/已工作两年，正在找工作，所读专业是设计/目前岗位是设计师，目前在秋招找工作/准备辞职找工作。',
+    decision: '例：我最近正在考虑是否要去其他城市工作，目前的工作比较稳定，但发展空间有限，同时我已经有了一个新的机会。',
     relationship: '例：我和一位关系比较重要的人最近产生了一些矛盾，之前相处一直不错，但最近因为沟通方式的问题出现了几次冲突。',
     overall: '例：我最近正在经历毕业、求职等变化，整体生活节奏比较快，也比较担心接下来一段时间的发展情况。'
   };
 
   const goalExamples = {
-    career: '例：我希望找到一份更适合自己、发展空间比较好的工作。',
-    decision: '例：我希望判断这个决定是否值得做，以及什么情况下采取行动会更合适。',
-    relationship: '例：我希望了解这段关系接下来可能如何发展，以及我应该怎样处理。',
+    career: '例：我希望转行到金融领域/找到一份更能平衡生活且发展空间比较好的工作。',
+    decision: '例：我希望能够有更好的职业发展和更可观的薪资水平。',
+    relationship: '例：我希望能继续维持这段关系/尽快脱单。',
     overall: '例：我希望了解近期整体状态，以及接下来一段时间更值得关注的方面。'
   };
 
@@ -934,7 +872,7 @@ function pickTopic(el, key, label) {
     career: '例：我比较担心选择错误，或者新机会看起来很好，但实际发展并不理想。',
     decision: '例：我比较担心做错选择，之后会承担较大的损失或后悔。',
     relationship: '例：我比较担心关系进一步恶化，也不知道自己现在的处理方式是否合适。',
-    overall: '例：我比较担心近期会遇到一些意料之外的变化，影响原来的计划。'
+    overall: '例：我担心同时处理太多事情导致精力分散，也担心做错优先级选择。'
   };
 
   contextInput.placeholder = contextExamples[key] || contextExamples.overall;
@@ -964,11 +902,25 @@ function startExperiment() {
     ST.birth = '未提供';
   }
 
-  ST.context = context;
-  ST.goal = goal;
-  ST.worry = worry;
-  ST.concern = concern;
-  initChat();
+ST.context = context;
+ST.goal = goal;
+ST.worry = worry;
+ST.concern = concern;
+
+initChat();
+}
+
+// 根据流程在最后一次AI回复中给出一条、且只给出一条核心行动建议，供风险感知和采纳意愿评价。
+function finalAdviceInstruction() {
+  return `【必须执行的最终输出规则】本次咨询在你这次回复后结束。请结合用户的当前情况、目标、顾虑、具体问题以及全部互动信息，给出一条明确、具体、可理解的核心行动建议。回复结尾必须单列如下标题和建议，不得省略：
+【核心行动建议】
+<一条具体行动，说明要做什么；尽量明确实施条件或时间范围。避免给出互相冲突的多项建议；不要凭空假定已掌握用户的真实经历或预测事实。>
+这应是用户可实际考虑是否采纳的一项行动，尽量避免泛泛的“保持积极”“多加努力”。`;
+}
+
+function extractFinalAdvice(text) {
+  const hit = String(text).match(/【核心行动建议】\s*([\s\S]*?)(?=\n\s*【|$)/);
+  return hit ? hit[1].trim() : '';
 }
 
 // ══════════════════════════════════════════
@@ -988,13 +940,8 @@ function initChat() {
   document.getElementById('ch-name').textContent = role.name;
   document.getElementById('ch-desc').textContent = role.desc;
 
-  // Build survey scales
-  [
-  'aa1','aa2','aa3','aa4',
-  'pa1','pa2','pa3','pa4',
-  'pu1','pu2','pu3','pu4',
-  'ce1','ce2','ce3'
-].forEach(buildScale);
+  // Create all questionnaire scales. Candidate M2 scales are retained in the pilot for comparison.
+  SURVEY_IDS.concat(['mc-info','mc-personal']).forEach(buildScale);
 
   // Greeting → first AI reply
   setTimeout(() => {
@@ -1008,20 +955,15 @@ function initChat() {
 }
 
 function buildUserMessage() {
-  const topicMap = {
-    career:       '职业发展方向',
-    decision:     '重要决策',
-    relationship: '人际关系',
-    overall:      '整体运势',
-  };
-  const topicStr = topicMap[ST.topic] || ST.topic;
-  let msg = `我想咨询一下${topicStr}方面的问题。`;
-  msg += `\n当前情况：${ST.context}`;
-  msg += `\n我的目标：${ST.goal}`;
-  msg += `\n我的主要顾虑：${ST.worry}`;
-  msg += `\n具体问题：${ST.concern}`;
+  // 四项首页信息必须全部进入初始AI请求与后续上下文；六组保持完全一致。
+  let msg = `【咨询领域】职业选择与发展
+【当前情况】${ST.context}
+【个人目标】${ST.goal}
+【主要顾虑】${ST.worry}
+【具体问题】${ST.concern}`;
   if (EXP.role === 'fortune' && ST.birth !== '未提供') {
-    msg += `\n我的生辰是${ST.birth}。`;
+    msg += `
+【出生信息】${ST.birth}`;
   }
   return msg;
 }
@@ -1034,16 +976,22 @@ async function callAI(turn, followupQ = '') {
   if (turn === 'first') {
     const sysPrompt = role.systemPrompt(ST.topicLabel, ST.concern, ST.birth, EXP.valence);
     const userMsg = buildUserMessage();
-    messages = [{ role: 'user', content: `${sysPrompt}\n\n用户问题：${userMsg}` }];
+    messages = [{ role: 'user', content: `${sysPrompt}\n\n用户完整情况：${userMsg}\n\n${EXP.interaction === 'single' ? finalAdviceInstruction() : '这是第一轮分析。给出有依据的初步分析和适度建议；对话还将继续，不必输出最终核心行动建议。'}` }];
   } else {
-    // followup
+    // 传入完整历史：初始回答 + 已发生的每次追问与AI回复（原代码会丢掉第二轮历史）。
     const sysPrompt = role.systemPrompt(ST.topicLabel, ST.concern, ST.birth, EXP.valence);
-    const followupInstruction = role.followupPrompt(followupQ, ST.history);
-    messages = [
-      { role: 'user', content: sysPrompt + '\n\n用户初始问题：' + buildUserMessage() },
-      { role: 'assistant', content: ST.history[0] || '' },
-      { role: 'user', content: followupInstruction },
-    ];
+    messages = [{ role: 'user', content: sysPrompt + '\n\n用户初始问题：' + buildUserMessage() }];
+    for (let i = 0; i < ST.history.length; i++) {
+      messages.push({ role: 'assistant', content: ST.history[i] });
+      if (ST.followupQuestions[i]) {
+        const q = ST.followupQuestions[i];
+        const followupInstruction = EXP.interaction === 'multi_personal'
+          ? `【用户新补充的个人决策信息】\n${q}\n请针对这一新增信息，明确指出它与你之前的判断有何关联，并据此细化或调整建议。允许用户没有具体经验，不得擅自补出经历或岗位。尽量简洁，不要额外堆砌无关背景知识。`
+          : `${role.followupPrompt(q, ST.history)}\n这是信息扩展条件：重点补充新的解释依据、分析细节和适用条件，不要反问用户提供个人信息。`;
+        const isLastFollowup = (i === ST.followupQuestions.length - 1 && ST.turnCount === ST.maxTurns - 1);
+        messages.push({ role: 'user', content: followupInstruction + (isLastFollowup ? '\n\n' + finalAdviceInstruction() : '\n本轮不是最终回答，请继续解释，结尾无需输出【核心行动建议】。') });
+      }
+    }
   }
 
   try {
@@ -1055,7 +1003,25 @@ async function callAI(turn, followupQ = '') {
       }),
     });
 
-    const data = await res.json();
+console.log('AI API HTTP status:', res.status);
+
+const raw = await res.text();
+console.log('AI API raw response:', raw);
+
+let data;
+try {
+  data = JSON.parse(raw);
+} catch (e) {
+  throw new Error(
+    `服务器返回了无法解析的内容，HTTP ${res.status}：${raw.slice(0, 300)}`
+  );
+}
+
+if (!res.ok) {
+  throw new Error(
+    `服务器请求失败，HTTP ${res.status}：${data.error?.message || raw.slice(0, 300)}`
+  );
+}
 
     if (data.error) {
       removeTyping();
@@ -1068,12 +1034,20 @@ async function callAI(turn, followupQ = '') {
     addMsg('ai', text);
     ST.history.push(text);
     ST.turnCount++;
+    if ((EXP.interaction === 'single' || ST.turnCount === ST.maxTurns)) {
+      ST.finalAdvice = extractFinalAdvice(text);
+      if (!ST.finalAdvice) console.warn('最终回复未识别到【核心行动建议】标题；请在正式收数前检查提示词稳定性。');
+    }
 
-    // Multi: show followup options after first turn; after second turn go to survey
-    if (EXP.interaction === 'multi' && turn === 'first') {
-      setTimeout(showFollowups, 400);
+    // 单轮逻辑保持不变；两种多轮均保持总共3次AI回复。
+    if (EXP.interaction === 'multi_info' || EXP.interaction === 'multi_personal') {
+      if (ST.turnCount < ST.maxTurns) {
+        setTimeout(EXP.interaction === 'multi_info' ? showFollowups : showPersonalizedInputs, 600);
+      } else {
+        setTimeout(showFinalButton, 600);
+      }
     } else {
-      setTimeout(showSurvey, 600);
+      setTimeout(showFinalButton, 600);
     }
 
   } catch (err) {
@@ -1083,26 +1057,77 @@ async function callAI(turn, followupQ = '') {
   }
 }
 
-function showFollowups() {
-  const role = ROLES[EXP.role];
+function showFollowups(){
+
+const role=ROLES[EXP.role];
+
+const wrap=document.createElement("div");
+
+wrap.className="followup-wrap";
+
+wrap.id="followup-btns";
+
+const currentRound=ST.turnCount;
+
+const questions=role.followups[currentRound];
+
+questions.forEach(q=>{
+
+const btn=document.createElement("button");
+
+btn.className="fup-btn";
+
+btn.textContent=q;
+
+btn.onclick=()=>handleFollowup(q,wrap);
+
+wrap.appendChild(btn);
+
+});
+
+document.getElementById("messages").appendChild(wrap);
+
+scrollBottom();
+
+}
+
+// 个性化条件：每轮只有一道具体、普适的补充问题，无需强迫被试编造经历。
+function showPersonalizedInputs() {
+  const round = ST.turnCount;
+  const field = round === 1 ? {
+    label: '针对你目前考虑的行业、岗位或城市，你已有过哪些了解、接触或明确的个人偏好？',
+    hint: '例如相关课程、实习或工作经验、投递过的岗位、想去或不想去的城市。没有相关经历也没关系，可填写目前最感兴趣的方向。'
+  } : {
+    label: '结合刚才的分析，你做这项职业决定时最看重什么？目前有什么现实限制？',
+    hint: '例如收入、稳定性、成长空间、城市、时间期限或经济压力。请写你最在意的1—2项；没有明确限制可以写“暂时没有”。'
+  };
   const wrap = document.createElement('div');
   wrap.className = 'followup-wrap';
   wrap.id = 'followup-btns';
-
-  role.followups.forEach(q => {
-    const btn = document.createElement('button');
-    btn.className = 'fup-btn';
-    btn.textContent = q;
-    btn.onclick = () => handleFollowup(q, wrap);
-    wrap.appendChild(btn);
-  });
-
-  const endBtn = document.createElement('button');
-  endBtn.className = 'fup-btn fup-end';
-  endBtn.textContent = '不了，直接完成问卷 →';
-  endBtn.onclick = () => { wrap.remove(); showSurvey(); };
-  wrap.appendChild(endBtn);
-
+  const intro = document.createElement('div');
+  intro.className = 's-label';
+  intro.textContent = '请补充一项实际情况，以便AI结合你的情况继续分析';
+  wrap.appendChild(intro);
+  const label = document.createElement('label');
+  label.className = 'personal-label';
+  label.htmlFor = `personal-${round}`;
+  label.textContent = field.label;
+  const textarea = document.createElement('textarea');
+  textarea.id = label.htmlFor;
+  textarea.className = 'personal-input';
+  textarea.placeholder = field.hint;
+  textarea.maxLength = 500;
+  wrap.appendChild(label);
+  wrap.appendChild(textarea);
+  const btn = document.createElement('button');
+  btn.className = 'fup-btn';
+  btn.textContent = '提交补充信息，继续咨询 →';
+  btn.onclick = () => {
+    const value = textarea.value.trim();
+    if (!value) { alert('请填写一项实际情况；如没有相关经历或限制，也可以如实说明。'); return; }
+    handleFollowup(`${field.label}\n${value}`, wrap);
+  };
+  wrap.appendChild(btn);
   document.getElementById('messages').appendChild(wrap);
   scrollBottom();
 }
@@ -1110,29 +1135,41 @@ function showFollowups() {
 function handleFollowup(q, wrap) {
   wrap.remove();
   addMsg('user', q);
+ST.followupQuestions.push(q);
   callAI('followup', q);
+}
+function showFinalButton() {
+  const wrap = document.createElement('div');
+
+  wrap.className = 'followup-wrap';
+  wrap.id = 'final-btn-wrap';
+
+  const endBtn = document.createElement('button');
+
+  endBtn.className = 'fup-btn fup-end';
+  endBtn.textContent = '我已阅读完毕，开始作答问卷 →';
+
+  endBtn.onclick = () => {
+    wrap.remove();
+    showSurvey();
+  };
+
+  wrap.appendChild(endBtn);
+
+  document.getElementById('messages').appendChild(wrap);
+
+  scrollBottom();
 }
 
 function showSurvey() {
-  // 不直接显示问卷，而是先显示一个按钮
-  const existing = document.getElementById('read-done-btn');
-  if (existing) return; // 防止重复出现
-  const wrap = document.createElement('div');
-  wrap.id = 'read-done-btn';
-  wrap.style.cssText = 'margin: 20px 0 0 38px; animation: fadeUp .25s ease;';
-  const btn = document.createElement('button');
-  btn.className = 'fup-btn';
-  btn.style.cssText = 'background: #1e40af; color: white; border-color: #1e40af; font-weight: 600;';
-  btn.textContent = '✅ 我已阅读完毕，开始作答问卷';
-  btn.onclick = function() {
-    wrap.remove();
-    document.getElementById('survey-panel').style.display = 'block';
-    document.getElementById('survey-panel').scrollIntoView({ behavior: 'smooth' });
-  };
-  wrap.appendChild(btn);
-  document.getElementById('messages').appendChild(wrap);
-  scrollBottom();
+  const adviceBox = document.getElementById('advice-reminder');
+  const adviceText = document.getElementById('advice-text');
+  adviceText.textContent = ST.finalAdvice || '请以AI最后一次回复提出的主要行动建议为评价对象。';
+  adviceBox.style.display = 'block';
+  document.getElementById('survey-panel').style.display = 'block';
+  document.getElementById('survey-panel').scrollIntoView({ behavior: 'smooth' });
 }
+
 // ── Chat helpers ──
 function addMsg(role, text) {
   const roleObj = ROLES[EXP.role];
@@ -1190,7 +1227,8 @@ function scrollBottom() {
 }
 
 function mdLite(text) {
-  return text
+  return String(text)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br>');
 }
@@ -1208,7 +1246,8 @@ function buildScale(id) {
     pt.onclick = function() {
       c.querySelectorAll('.sv-pt').forEach(p => p.classList.remove('picked'));
       this.classList.add('picked');
-      ST.surveyAnswers[id] = i;
+      if (id === 'mc-info' || id === 'mc-personal') ST.mcAnswers[id] = i;
+      else ST.surveyAnswers[id] = i;
       checkReady();
     };
     c.appendChild(pt);
@@ -1229,16 +1268,18 @@ function pickMC(groupId, el, val) {
 }
 
 function checkReady() {
-  const scalesOk = Object.keys(ST.surveyAnswers).length >= 15;
-  const mcOk = ST.mcAnswers['mc-role'] && ST.mcAnswers['mc-valence'];
+  const scalesOk = SURVEY_IDS.every(id => Object.prototype.hasOwnProperty.call(ST.surveyAnswers,id));
+  const mcOk = ST.mcAnswers['mc-role'] && ST.mcAnswers['mc-info'] && ST.mcAnswers['mc-personal'];
   const btn = document.getElementById('sv-submit');
   if (scalesOk && mcOk) btn.classList.add('ready');
   else btn.classList.remove('ready');
 }
 
 async function submitSurvey() {
-const scalesOk = Object.keys(ST.surveyAnswers).length >= 15;
-  const mcOk = ST.mcAnswers['mc-role'] && ST.mcAnswers['mc-valence'];
+
+  const scalesOk = SURVEY_IDS.every(id => Object.prototype.hasOwnProperty.call(ST.surveyAnswers,id));
+  const mcOk = ST.mcAnswers['mc-role'] && ST.mcAnswers['mc-info'] && ST.mcAnswers['mc-personal'];
+
   if (!scalesOk || !mcOk) {
     alert('请完成所有题目后再提交。');
     return;
@@ -1248,52 +1289,76 @@ const scalesOk = Object.keys(ST.surveyAnswers).length >= 15;
     exp_config: EXP,
     topic: ST.topic,
     concern_length: ST.concern.length,
-    context_length: ST.context.length,
-    goal_length: ST.goal.length,
-    worry_length: ST.worry.length,
     birth_provided: ST.birth !== '未提供',
     turns: ST.turnCount,
     survey: ST.surveyAnswers,
     manipulation_checks: ST.mcAnswers,
     timestamp: new Date().toISOString(),
   };
+
   console.log('[EXPERIMENT DATA]', JSON.stringify(payload, null, 2));
+
   try {
-    await fetch('https://experiment.gripe', {
+
+    const res = await fetch('https://experiment.gripe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         type: 'save',
-data: {
-  group_name: `${EXP.role}_${EXP.valence}_${EXP.interaction}`,
-  topic: ST.topic,
-  topicLabel: ST.topicLabel,
+        data: {
+          group_name: `${EXP.role}_${EXP.valence}_${EXP.interaction}`,
+          interaction: EXP.interaction,
+          final_advice: ST.finalAdvice || '',
+          turns: ST.turnCount,
 
-  // 三项背景信息
-  context: ST.context,
-  goal: ST.goal,
-  worry: ST.worry,
+          topic: ST.topic,
+          topicLabel: ST.topicLabel,
 
-  concern: ST.concern,
-  birth: ST.birth,
-  history: ST.history,
+          context: ST.context || '',
+          goal: ST.goal || '',
+          worry: ST.worry || '',
+
+          concern: ST.concern || '',
+          birth: ST.birth || '',
+
+history: ST.history,
+followup_questions: ST.followupQuestions,
           surveyAnswers: ST.surveyAnswers,
           mcAnswers: ST.mcAnswers,
+
           timestamp: new Date().toISOString()
         }
       })
     });
 
-    console.log('DATA SENT TO D1');
+    const result = await res.json();
+
+    console.log('[D1 SAVE RESPONSE]', result);
+
+    if (!res.ok || !result.success) {
+      console.error('[D1 SAVE FAILED]', result);
+      alert('数据保存失败，请不要关闭页面，请联系研究人员。');
+      return;
+    }
+
+    console.log('[D1 SAVE SUCCESS]');
+
   } catch (err) {
-    console.error('D1 SAVE ERROR:', err);
+
+    console.error('[D1 SAVE ERROR]', err);
+
+    alert('数据保存失败，请不要关闭页面，请联系研究人员。');
+    return;
   }
+
   document.getElementById('chat').style.display = 'none';
+
   const ty = document.getElementById('thankyou');
   ty.style.display = 'flex';
 }
+
 </script>
 </body>
 </html>
