@@ -590,11 +590,12 @@ body {
     <div class="sv-item"><div class="sv-q">28. 这个AI更像哪种顾问？</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;" id="mc-role">
         <button class="fup-btn" style="flex:1;min-width:120px;" onclick="pickMC('mc-role',this,'命理分析型AI')">命理分析型AI</button>
-        <button class="fup-btn" style="flex:1;min-width:120px;" onclick="pickMC('mc-role',this,'专业分析型AI')">专业分析型AI</button>
+        <button class="fup-btn" style="flex:1;min-width:120px;" onclick="pickMC('mc-role',this,'专业建议型AI')">专业建议型AI</button>
         <button class="fup-btn" style="flex:1;min-width:120px;" onclick="pickMC('mc-role',this,'说不清楚')">说不清楚</button>
       </div>
     </div>
-
+    <div class="sv-item"><div class="sv-q">29. 这次AI为其判断和建议提供了充分、具体的补充解释与信息。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="mc-info"></div><span class="sv-edge right">完全同意</span></div></div>
+    <div class="sv-item"><div class="sv-q">30. 这次AI依据我提供的个人情况和偏好细化或调整了建议。</div><div class="sv-scale"><span class="sv-edge">完全不同意</span><div class="sv-pts" id="mc-personal"></div><span class="sv-edge right">完全同意</span></div></div>
 
     <button class="sv-submit" id="sv-submit" onclick="submitSurvey()">提交问卷 →</button>
   </div>
